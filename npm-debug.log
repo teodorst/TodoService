@@ -1,7 +1,7 @@
 0 info it worked if it ends with ok
 1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'start' ]
 2 info using npm@3.3.12
-3 info using node@v5.4.1
+3 info using node@v5.5.0
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle todo-service@1.0.0~prestart: todo-service@1.0.0
 6 silly lifecycle todo-service@1.0.0~prestart: no script for prestart, continuing
@@ -15,18 +15,18 @@
 14 verbose stack Error: todo-service@1.0.0 start: `node server.js`
 14 verbose stack Exit status 1
 14 verbose stack     at EventEmitter.<anonymous> (/usr/lib/node_modules/npm/lib/utils/lifecycle.js:232:16)
-14 verbose stack     at emitTwo (events.js:87:13)
-14 verbose stack     at EventEmitter.emit (events.js:172:7)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at EventEmitter.emit (events.js:185:7)
 14 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:24:14)
-14 verbose stack     at emitTwo (events.js:87:13)
-14 verbose stack     at ChildProcess.emit (events.js:172:7)
+14 verbose stack     at emitTwo (events.js:100:13)
+14 verbose stack     at ChildProcess.emit (events.js:185:7)
 14 verbose stack     at maybeClose (internal/child_process.js:821:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
 15 verbose pkgid todo-service@1.0.0
 16 verbose cwd /home/teodor/Documents/MindMap/exemple/TodoService
-17 error Linux 3.19.0-43-generic
+17 error Linux 3.19.0-47-generic
 18 error argv "/usr/bin/nodejs" "/usr/bin/npm" "start"
-19 error node v5.4.1
+19 error node v5.5.0
 20 error npm  v3.3.12
 21 error code ELIFECYCLE
 22 error todo-service@1.0.0 start: `node server.js`

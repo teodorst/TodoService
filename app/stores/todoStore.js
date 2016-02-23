@@ -37,6 +37,7 @@ todoStore.removeTodo = function (userId) {
 }
 
 todoStore.updateTodo = function ( id, newTodo ) {
+    console.log( newTodo );
     return Todo.findByIdAndUpdate( id, { 
         content: newTodo.content,
         completed : newTodo.completed

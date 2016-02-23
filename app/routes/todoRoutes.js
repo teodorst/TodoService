@@ -1,4 +1,4 @@
-var todoStore = require('../queries/todoStore.js')
+var todoStore = require('../stores/todoStore.js')
 
 
 var todoRoutes = function (app) {
@@ -22,9 +22,9 @@ var todoRoutes = function (app) {
         var userId = req.params.userId;
         todoStore.getTodos( userId )
             .then( function( todos ) {
-                if( todos.lenght == 0 ) {
+                if( todos.lenght === 0 ) {
                     res.status(404).json({
-                        lenght: todos.lenght    
+                        errorMsg: 'not found'    
                     });
                 }
                 else {

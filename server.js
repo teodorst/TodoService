@@ -5,7 +5,7 @@ var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 
 var configure   = require('./configure.js');
-var db          = require('./app/queries/todoStore.js');
+var db          = require('./app/stores/todoStore.js');
 
 var facebookRoutes  = require('./app/routes/facebookRoutes');
 var todoRoutes      = require('./app/routes/todoRoutes');
@@ -28,6 +28,7 @@ db.connect(process.env.DB_URL);
 // configure cors
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
