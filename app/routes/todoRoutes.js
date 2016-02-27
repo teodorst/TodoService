@@ -1,8 +1,7 @@
 var todoStore = require('../stores/todoStore.js')
 
-
 var todoRoutes = function (app) {
-    
+
     app.post( '/api/:userId/todos', function(req, res) {
         console.log(req.body);
         var userId = req.params.userId;
@@ -12,7 +11,7 @@ var todoRoutes = function (app) {
                     lenght : 1,
                     todo: todo
                 })
-            })  
+            })
             .catch( function(err) {
                 res.status(401).json();
             });
@@ -24,21 +23,21 @@ var todoRoutes = function (app) {
             .then( function( todos ) {
                 if( todos.lenght === 0 ) {
                     res.status(404).json({
-                        errorMsg: 'not found'    
+                        errorMsg: 'not found'
                     });
                 }
                 else {
                     res.status(200).json({
                         lenght: todos.lenght,
                         todos: todos
-                    });    
+                    });
                 }
             })
             .catch( function(err) {
                 res.status(401).json();
             });
-    });     
-    
+    });
+
     app.put( '/api/:userId/todos/:todoId', function(req, res) {
         todoStore.updateTodo( req.params.todoId, req.body)
             .then(function(data) {
