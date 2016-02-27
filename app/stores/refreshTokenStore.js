@@ -2,18 +2,28 @@ var RefreshToken = require('../models/RefreshToken.js');
 
 var refreshTokenStore = {};
 
-refreshTokenStore.addPair = function(userId, refreshToken) {
-  return new RefreshToken({
-    userId: userId,
-    refreshToken: refreshToken
-  }).save();
+refreshTokenStore.addPair = function( newPair ) {
+  return new RefreshToken(newPair).save();
 };
 
+
+
+
 refreshTokenStore.removePair = function(userId, refreshToken) {
-  return refreshToken.remove({
+  return RefreshToken.remove({
     userId: usedId,
-    refreshToken: refreshToken
+    refresh_token: refreshToken
   });
 }
+
+refreshTokenStore.updateRefreshTokenPair = function( query, newPair ) {
+  console.log("Interschimb", query, newPair)
+  return RefreshToken.findOneAndUpdate(query, newPair);
+}
+
+refreshTokenStore.findRefreshTokenPair = function( pair ) {
+  return RefreshToken.findOne(pair);
+};
+
 
 module.exports = refreshTokenStore;

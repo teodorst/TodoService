@@ -12,9 +12,9 @@ userStore.findUserByUsername = function( username ) {
 
 userStore.saveUser = function( newUser ) {
   return new User({
-    username: userData.username,
-    password: userData.password,
-    email: userData.email,
+    username: newUser.username,
+    password: newUser.password,
+    email: newUser.email,
     createOn: getTime(),
     lastModified: getTime(),
     })

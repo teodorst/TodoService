@@ -12,28 +12,34 @@ authService.TOKEN_DIDNT_SAVE = "Token didn\'t saved";
 
 //reimplemented
 authService.createAccessToken = function ( userId ) {
+  console.log("UserId", typeof userId)
   var token = jwt.sign(
-    userId,
+    { id: userId },
     process.env.SECRET,
     {
-      expiresIn : 3600
+      expiresIn : '1h'
     }
   );
   return token;
 };
 
 authService.createRefreshToken = function( userId ) {
-  var refreshToken = randomstring(15);
+  console.log('Generating Refresh Token', typeof userId);
+  var refreshToken = randomstring.generate(50);
   return new Promise(function(resolve, reject) {
-    refreshToken.addPair(userId, refreshToken)
+    refreshTokenStore.addPair({ userId: userId, refresh_token: refreshToken})
       .then(function(dbEntry) {
+        console.log('New Refresh from db', dbEntry);
         resolve(refreshToken);
       })
       .catch( function(err) {
+        console.log(err);
         reject(authService.TOKEN_DIDNT_SAVE);
       });
   });
 }
+
+
 
 authService.verifyToken = function(req, res, next) {
   // check for token in request
@@ -54,20 +60,27 @@ authService.verifyToken = function(req, res, next) {
   }
 }
 
-authService.refreshToken = function( data ) {
+authService.refreshToken = function( oldPair ) {
+  console.log('incep procedura')
   return new Promise(function(resolve, reject) {
-    refrestStore.findTokenEntry( data._id, data.refrestToken )
+    refreshTokenStore.findRefreshTokenPair( oldPair )
       .then(function() {
+        console.log('no?')
+        console.log(arguments)
+        console.log('no??')
         var newPair = {
-          userId: data._id,
-          refreshToken: randomstring(15)
+          userId: oldPair.userId,
+          refresh_token: randomstring.generate(50)
         };
-        refrestToken.addRefreshTokenPair(newPair)
-          .then( function( newDBEntry ) {
-            newPair.access_token = authService.createAccessToken(newPair._id);
+        console.log('Urmeaza sa interschimb');
+        refreshTokenStore.updateRefreshTokenPair(oldPair, newPair)
+          .then( function() {
+            newPair.access_token = 'Bearer ' + authService.createAccessToken(newPair.userId);
+            console.log(newPair);
             resolve(newPair);
           })
           .catch( function( error ) {
+            console.log(error);
             reject(error);
           });
       })
@@ -75,7 +88,7 @@ authService.refreshToken = function( data ) {
         reject(error);
       });
   });
-
 }
+
 
 module.exports = authService;

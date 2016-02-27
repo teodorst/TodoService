@@ -2,29 +2,10 @@ var userService     = require('../services/userService.js');
 
 module.exports = function( app ) {
 
-app.post('/api/users/login', function(req, res) {
-  userService.loginUser(req.body)
-    .then(function(data) {
-      res.status(200).json(data);
-    })
-    .catch(function(error) {
-      if( error.type === userService.USERNAME_NOT_EXISTS) {
-        res.status(404).json({ message: error.message});
-      }
-      else
-        if( error.type === userService.PASSWORD_DONT_MATCH) {
-          res.status(401).json({ message: error.message});
-        }
-      else
-        if ( error.type === userService.SERVER_ERROR ) {
-        res.status(500).json(error);
-      }
-    });
-  });
 
   // refactorize soon
   app.post('/api/users', function(req, res) {
-    UserStore.createUser(req.body)
+    userService.createUser(req.body)
       .then(function(newUser) {
         if( newUser ){
           console.log(newUser);
@@ -34,10 +15,9 @@ app.post('/api/users/login', function(req, res) {
           res.status(500).json({ message: "Server Error!"});
         }
       })
-      .catch(function(err) {
-        if(err) {
-          console.log(err);
-          res.status(405).json({ message: "User with this email already exists"});
+      .catch(function(error) {
+        if(error.type === userService.SERVER_ERROR) {
+          res.status(405).json({ message: error.message});
         }
       });
   });
@@ -50,10 +30,12 @@ app.post('/api/users/login', function(req, res) {
   app.get('/api/users/:id', function(req, res) {
     userService.getUserInfo()
       .then(function( user ) {
-        
+        //if()
       })
       .catch( function(err) {
-
+        if( error.type === userService.USERNAME_NOT_EXISTS ) {
+          res.status(401)
+        }
       });
   });
 

@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var RefreshTokenSchema = new Schema({
   userId: { type: String, required: true },
-  refreshToken: { type: String, required: true }
+  refresh_token: { type: String, required: true }
 });
 
 module.exports = mongoose.model('RefreshToken', RefreshTokenSchema);

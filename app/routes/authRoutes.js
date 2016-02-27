@@ -21,9 +21,9 @@ module.exports = function( app ) {
       }
     });
   });
-  
-  app.post('/auth/refresh', function(req, res) {
-    authService.refresh()
+
+  app.post('/api/auth/refresh', function(req, res) {
+    authService.refreshToken(req.body)
       .then(function( newTokensPair ) {
         res.status(200).json(newTokensPair);
       })
