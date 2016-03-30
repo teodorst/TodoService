@@ -1,4 +1,3 @@
-require('dotenv');
 var mongoose = require('mongoose');
 var q        = require('q');
 mongoose.Promise = q.Promise;

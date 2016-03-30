@@ -1,4 +1,3 @@
-require('dotenv').load();
 var jwt = require('jsonwebtoken');
 var randomstring = require("randomstring");
 var refreshTokenStore = require('../stores/refreshTokenStore.js');
@@ -65,9 +64,7 @@ authService.refreshToken = function( oldPair ) {
   return new Promise(function(resolve, reject) {
     refreshTokenStore.findRefreshTokenPair( oldPair )
       .then(function() {
-        console.log('no?')
         console.log(arguments)
-        console.log('no??')
         var newPair = {
           userId: oldPair.userId,
           refresh_token: randomstring.generate(50)
