@@ -36,7 +36,7 @@ module.exports = function( app ) {
       })
       .catch( function(err) {
         if( err.type === userService.USERNAME_NOT_EXISTS ) {
-          res.status(401)
+          res.status(401);
         }
       });
   });
