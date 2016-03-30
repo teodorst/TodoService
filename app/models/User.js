@@ -4,13 +4,16 @@ var Schema   = mongoose.Schema;
 
 
 var userSchema = new Schema({
-  username: { type: String, required: true, unique: true },
+	firstName: { type: String },
+	lastName: { type: String },
+	birthDate: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createOn: { type: Number, required: true },
   lastModified: { type: Number, required: true },
   resetPasswordToken: String,
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date,
+	profilePictureUrl: String
 });
 
 userSchema.pre('save', function(next) {
@@ -18,7 +21,7 @@ userSchema.pre('save', function(next) {
   var SALT_FACTOR = 5;
   if( !user.isModified('password') ) return next();
 
-  bcrypt.genSalt( SALT_FACTOR, function(err, salt) {
+  bcrypt.genSalt (SALT_FACTOR, function(err, salt) {
     if(err) next(err);
     bcrypt.hash(user.password, salt, null, function(err, hash) {
       if( err ) return next(err);
