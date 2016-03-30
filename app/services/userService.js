@@ -1,5 +1,7 @@
-var userStore        = require('../stores/userStore');
-var authService      = require('./authService.js');
+var userStore        	= require('../stores/userStore.js');
+var authService      	= require('./authService.js');
+var refreshTokenStore = require('../stores/refreshTokenStore.js');
+
 var userService = {};
 
 //constant errorMsg
@@ -9,9 +11,9 @@ userService.SERVER_ERROR = "Server error";
 userService.REFRESH_TOKEN_ERROR = "Refresh token error";
 
 
-userService.loginUser = function( data ) {
+userService.loginUser = function (data) {
   return new Promise( function(resolve, reject) {
-    userStore.findUserByUsername(data.username)
+    userStore.findUserByEmail(data.email)
       .then(function(user) {
         console.log(user);
         if( !user ) {
@@ -68,7 +70,6 @@ userService.loginUser = function( data ) {
 
 userService.createUser = function(newUser) {
   return new Promise(function(resolve, reject) {
-
     userStore.saveUser(newUser)
       .then(function(userFromDB) {
         console.log('aici', authService.createRefreshToken);
@@ -100,5 +101,30 @@ userService.createUser = function(newUser) {
       });
   });
 };
+
+userService.getUserProfile = function(userId) {
+	if (userId) {
+		return new Promise(function(resolve, reject) {
+			userStore.findUserById(userId)
+				.then(function(user) {
+					resolve(user);
+				})
+				.catch(function(err) {
+					console.log(err);
+					reject(err);
+				});
+		});
+	}
+	else {
+		throw new Error({message: "user id undefined"});
+	}
+};
+
+userService.logout = function(userId, refreshToken) {
+	if( !userId && !refreshToken) {
+		throw	new Error("params are undefined");
+	}
+	return refreshTokenStore.removePair(userId, refreshToken);
+}
 
 module.exports = userService;

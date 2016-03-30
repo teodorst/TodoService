@@ -6,8 +6,9 @@ var getTime = function(){
 
 var userStore = {};
 
-userStore.findUserByUsername = function( username ) {
-  return User.findOne({ username: username });
+userStore.findUserByEmail = function (userEmail) {
+	console.log(userEmail);
+  return User.findOne({ email: userEmail });
 }
 
 userStore.saveUser = function (newUser) {
@@ -28,6 +29,9 @@ userStore.saveUser = function (newUser) {
     .save();
 };
 
+userStore.findUserById = function (id) {
+	return User.findOne({ _id: id });
+}
 
 // edit account
 userStore.updateUser = function (newUser) {
