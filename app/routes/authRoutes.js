@@ -2,6 +2,8 @@ var userService = require('../services/userService.js');
 var authService = require('../services/authService.js');
 
 module.exports = function( app ) {
+
+	// login user route
   app.post('/api/auth/login', function(req, res) {
   userService.loginUser(req.body)
     .then(function(data) {

@@ -49,14 +49,15 @@ authService.verifyToken = function(req, res, next) {
     // verifies secret and check expiration Date
     jwt.verify(token, process.env.SECRET, function(err, decoded) {
       if( err ) {
-        return res.status(401).json({ message: 'Failed to authenticate token.' });
       }
       else {
         req.decoded = decoded;
         next();
       }
     });
-  }
+  } else {
+		return res.status(401).json({ message: 'Failed to authenticate token.' });
+	}
 }
 
 authService.refreshToken = function( oldPair ) {
